@@ -1,0 +1,25 @@
+<span> Test</span>
+
+<div class="weeks-header">
+  <div class="week-day" *ngFor="let weekDay of weekDays">
+    {{ weekDay }}
+  </div>
+</div>
+<swiper-container
+  #swiper
+  gale-swiper
+  [config]="config"
+  class="container"
+  init="false"
+>
+  <swiper-slide class="single-item" *ngFor="let days of daysSlides">
+    <gale-dates
+      [weekDays]="weekDays"
+      [weeksWithDays]="days"
+      [view]="view"
+      [options]="calendarOptions"
+      [selectedDate]="startDate"
+    ></gale-dates>
+  </swiper-slide>
+</swiper-container>
+<button (click)="changeView()">Change View</button>

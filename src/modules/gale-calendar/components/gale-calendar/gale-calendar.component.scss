@@ -1,0 +1,10 @@
+@import '../../mixins';
+
+.week-day {
+  @include calendar-day();
+}
+
+gale-dates {
+  display: block;
+  margin-bottom: 5px;
+}
