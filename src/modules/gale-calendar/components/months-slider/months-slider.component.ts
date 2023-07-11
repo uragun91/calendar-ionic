@@ -40,7 +40,7 @@ export class MonthsSliderComponent implements OnInit {
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
   swiper!: Swiper;
 
-  set viewDate(date: Date) {
+  setViewDate(date: Date, direction?: Swiper['swipeDirection']) {
     const monthStartForViewDate = eachMonthOfInterval({
       start: startOfMonth(addMonths(date, -1)),
       end: endOfMonth(addMonths(date, 1)),
@@ -64,7 +64,7 @@ export class MonthsSliderComponent implements OnInit {
     if (this.swiper) {
       this.swiper.update();
       this.swiper.slideTo(
-        this.getMonthIndexByDate(date, this.swiper.swipeDirection),
+        this.getMonthIndexByDate(date, direction || 'next'),
         0,
         false
       );
@@ -78,7 +78,7 @@ export class MonthsSliderComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDate.currentValue) {
-      this.viewDate = this.selectedDate;
+      this.setViewDate(this.selectedDate);
     }
   }
 
@@ -164,6 +164,7 @@ export class MonthsSliderComponent implements OnInit {
     date: Date,
     direction: Swiper['swipeDirection']
   ): number {
+    console.log(direction);
     if (direction === 'next') {
       for (let i = 0; i < this.monthsSlides.length; i++) {
         for (let j = 0; j < this.monthsSlides[i].length; j++) {
