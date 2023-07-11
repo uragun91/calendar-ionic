@@ -3,22 +3,28 @@ import {
   Input,
   OnInit,
   OnChanges,
+  AfterViewInit,
   SimpleChanges,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
-import { addDays, eachWeekOfInterval, max, min } from 'date-fns';
+import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
+import { SwiperContainer } from 'swiper/element';
 
 @Component({
   selector: 'gale-weeks-slider',
   templateUrl: './weeks-slider.component.html',
   styleUrls: ['./weeks-slider.component.scss'],
 })
-export class WeeksSliderComponent implements OnInit, OnChanges {
+export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectedDate!: Date;
+
+  @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
 
   set viewDate(date: Date) {
     const weeksStartForViewDates = eachWeekOfInterval({
-      start: addDays(date, -1),
-      end: addDays(date, 1),
+      start: addWeeks(date, -1),
+      end: addWeeks(date, 1),
     });
 
     if (!this.weekStarts.length) {
@@ -42,6 +48,10 @@ export class WeeksSliderComponent implements OnInit, OnChanges {
     if (changes.selectedDate.currentValue) {
       this.viewDate = this.selectedDate;
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.swiperContainerRef.nativeElement.initialize();
   }
 
   ngOnInit() {}

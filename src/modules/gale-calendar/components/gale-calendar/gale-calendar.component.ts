@@ -16,6 +16,7 @@ import {
   endOfMonth,
   addDays,
   addMonths,
+  addWeeks,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
@@ -60,6 +61,10 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   private rightDiff = 1;
 
   constructor(private cdr: ChangeDetectorRef) {}
+
+  changeDate(): void {
+    this.startDate = addWeeks(this.startDate, -2);
+  }
 
   ngOnInit() {
     this.calendarOptions = { ...this.calendarOptions, ...this.options };

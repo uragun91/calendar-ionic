@@ -1,1 +1,9 @@
-<gale-days *ngFor="let days of weeksSlides" [days]="days" />
+<swiper-container
+  #swiper
+  class="container"
+  init="false"
+>
+  <swiper-slide class="single-item" *ngFor="let days of weeksSlides">
+    <gale-days [days]="days" />
+  </swiper-slide>
+</swiper-container>
