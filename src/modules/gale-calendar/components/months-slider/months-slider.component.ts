@@ -19,6 +19,7 @@ import {
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
+import { mergeDates } from '../../utils';
 
 @Component({
   selector: 'gale-months-slider',
@@ -41,9 +42,10 @@ export class MonthsSliderComponent implements OnInit {
     if (!this.monthStarts.length) {
       this.monthStarts = monthStartForViewDate;
     } else {
-      this.monthStarts = this.mergeDates(
+      this.monthStarts = mergeDates(
         monthStartForViewDate,
-        this.monthStarts
+        this.monthStarts,
+        this.calendarOptions.weekStart
       );
     }
 
@@ -91,17 +93,5 @@ export class MonthsSliderComponent implements OnInit {
         [weekStart]
       );
     });
-  }
-
-  private mergeDates(date1: Date[], date2: Date[]): Date[] {
-    return eachWeekOfInterval(
-      {
-        start: min([...date1, ...date2]),
-        end: max([...date1, ...date2]),
-      },
-      {
-        weekStartsOn: this.calendarOptions.weekStart,
-      }
-    );
   }
 }
