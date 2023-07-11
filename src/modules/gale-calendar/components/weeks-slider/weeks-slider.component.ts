@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
+import { GaleCalendarOptions } from '../gale-calendar/gale-calendar.component';
 
 @Component({
   selector: 'gale-weeks-slider',
@@ -20,14 +21,20 @@ import { SwiperContainer } from 'swiper/element';
 })
 export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectedDate!: Date;
+  @Input() calendarOptions!: GaleCalendarOptions;
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
 
   set viewDate(date: Date) {
-    const weeksStartForViewDates = eachWeekOfInterval({
-      start: addWeeks(date, -1),
-      end: addWeeks(date, 1),
-    });
+    const weeksStartForViewDates = eachWeekOfInterval(
+      {
+        start: addWeeks(date, -1),
+        end: addWeeks(date, 1),
+      },
+      {
+        weekStartsOn: this.calendarOptions.weekStart,
+      }
+    );
 
     if (!this.weekStarts.length) {
       this.weekStarts = weeksStartForViewDates;
@@ -59,10 +66,15 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit() {}
 
   private mergeDates(date1: Date[], date2: Date[]): Date[] {
-    return eachWeekOfInterval({
-      start: min([...date1, ...date2]),
-      end: max([...date1, ...date2]),
-    });
+    return eachWeekOfInterval(
+      {
+        start: min([...date1, ...date2]),
+        end: max([...date1, ...date2]),
+      },
+      {
+        weekStartsOn: this.calendarOptions.weekStart,
+      }
+    );
   }
 
   private generateWeekSlidesFromWeekStarts(weekStarts: Date[]): Date[][] {
