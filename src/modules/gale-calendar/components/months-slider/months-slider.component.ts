@@ -63,6 +63,7 @@ export class MonthsSliderComponent implements OnInit {
 
     if (this.swiper) {
       this.swiper.update();
+      this.swiper.slideTo(this.getMonthIndexByDate(date), 0, false);
     }
   }
 
