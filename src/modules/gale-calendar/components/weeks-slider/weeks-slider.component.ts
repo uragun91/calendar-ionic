@@ -8,9 +8,18 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
+import {
+  addDays,
+  addWeeks,
+  eachWeekOfInterval,
+  isSameDay,
+  max,
+  min,
+} from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
+import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { mergeDates } from '../../utils';
@@ -26,6 +35,8 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() calendarOptions!: GaleCalendarOptions;
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
+
+  swiper!: Swiper;
 
   set viewDate(date: Date) {
     const weeksStartForViewDates = eachWeekOfInterval(
@@ -49,10 +60,18 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     this.weeksSlides = this.generateWeekSlidesFromWeekStarts(this.weekStarts);
+    this.cdr.detectChanges();
+
+    if (this.swiper) {
+      this.swiper.update();
+      this.swiper.slideTo(this.getWeekIndex(date), 0, false);
+    }
   }
 
   public weeksSlides: Date[][] = [];
   private weekStarts: Date[] = [];
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDate.currentValue) {
@@ -66,6 +85,7 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
     };
     Object.assign(this.swiperContainerRef.nativeElement, sliderOptions);
     this.swiperContainerRef.nativeElement.initialize();
+    this.swiper = this.swiperContainerRef.nativeElement.swiper;
   }
 
   ngOnInit() {}
@@ -80,5 +100,19 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
         [weekStart]
       );
     });
+  }
+
+  private getWeekIndex(date: Date): number {
+    for (let i = 0; i < this.weeksSlides.length; i++) {
+      const isInTheWeek = this.weeksSlides[i].some((day) =>
+        isSameDay(date, day)
+      );
+
+      if (isInTheWeek) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 }
