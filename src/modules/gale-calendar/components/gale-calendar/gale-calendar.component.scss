@@ -4,7 +4,6 @@
   @include calendar-day();
 }
 
-gale-dates {
-  display: block;
-  margin-bottom: 5px;
+.calendar-head {
+  display: flex;
 }
