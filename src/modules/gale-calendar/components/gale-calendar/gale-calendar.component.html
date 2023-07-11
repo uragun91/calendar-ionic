@@ -12,6 +12,6 @@
       {{ weekDay }}
     </div>
   </div>
-  <gale-months-slider [hidden]="view === 'week'" [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
-  <gale-weeks-slider [hidden]="view === 'month'" [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
+  <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
+  <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
 </div>
