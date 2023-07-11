@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
-import { GaleCalendarOptions } from '../gale-calendar/gale-calendar.component';
+import { GaleCalendarOptions } from '../../models/calendar-options.model';
 
 @Component({
   selector: 'gale-weeks-slider',

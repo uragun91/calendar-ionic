@@ -21,11 +21,8 @@ import {
 import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
+import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { DatesComponent } from '../dates/dates.component';
-
-export interface GaleCalendarOptions {
-  weekStart: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-}
 
 @Component({
   selector: 'gale-calendar',

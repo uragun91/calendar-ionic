@@ -22,7 +22,7 @@ import {
 import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
-import { GaleCalendarOptions } from '../gale-calendar/gale-calendar.component';
+import { GaleCalendarOptions } from '../../models/calendar-options.model';
 
 const ANIMATION_DURATION = 800;
 // https://cubic-bezier.com/

@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   addDays,
@@ -17,12 +18,13 @@ import {
   startOfMonth,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
-import { GaleCalendarOptions } from '../gale-calendar/gale-calendar.component';
+import { GaleCalendarOptions } from '../../models/calendar-options.model';
 
 @Component({
   selector: 'gale-months-slider',
   templateUrl: './months-slider.component.html',
   styleUrls: ['./months-slider.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthsSliderComponent implements OnInit {
   @Input() selectedDate!: Date;
