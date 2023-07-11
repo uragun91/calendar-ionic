@@ -63,7 +63,11 @@ export class MonthsSliderComponent implements OnInit {
 
     if (this.swiper) {
       this.swiper.update();
-      this.swiper.slideTo(this.getMonthIndexByDate(date), 0, false);
+      this.swiper.slideTo(
+        this.getMonthIndexByDate(date, this.swiper.swipeDirection),
+        0,
+        false
+      );
     }
   }
 
@@ -156,15 +160,32 @@ export class MonthsSliderComponent implements OnInit {
     });
   }
 
-  private getMonthIndexByDate(date: Date): number {
-    for (let i = 0; i < this.monthsSlides.length; i++) {
-      for (let j = 0; j < this.monthsSlides[i].length; j++) {
-        const isInTheWeek = this.monthsSlides[i][j].some((day) =>
-          isSameDay(date, day)
-        );
+  private getMonthIndexByDate(
+    date: Date,
+    direction: Swiper['swipeDirection']
+  ): number {
+    if (direction === 'next') {
+      for (let i = 0; i < this.monthsSlides.length; i++) {
+        for (let j = 0; j < this.monthsSlides[i].length; j++) {
+          const isInTheWeek = this.monthsSlides[i][j].some((day) =>
+            isSameDay(date, day)
+          );
 
-        if (isInTheWeek) {
-          return i;
+          if (isInTheWeek) {
+            return i;
+          }
+        }
+      }
+    } else {
+      for (let i = this.monthsSlides.length - 1; i >= 0; i--) {
+        for (let j = this.monthsSlides[i].length - 1; j >= 0; j--) {
+          const isInTheWeek = this.monthsSlides[i][j].some((day) =>
+            isSameDay(date, day)
+          );
+
+          if (isInTheWeek) {
+            return i;
+          }
         }
       }
     }
