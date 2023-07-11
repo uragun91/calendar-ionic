@@ -90,6 +90,38 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit() {}
 
+  // private initSwiperListeners(): void {
+  //   this.swiper.on('slideChangeTransitionEnd', () => {
+  //     let lastDayOfFirstWeekOfMonth = this.weeksSlides[0][0][6];
+  //     let firstDayOfLastWeekOfMonth =
+  //       this.monthsSlides[this.monthsSlides.length - 1][
+  //         this.monthsSlides[this.monthsSlides.length - 1].length - 1
+  //       ][0];
+
+  //     if (this.swiper.isBeginning) {
+  //       this.monthsSlides.unshift(
+  //         this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
+  //       );
+  //       this.swiper.slideTo(1, 0, false);
+  //     } else if (this.swiper.isEnd) {
+  //       this.monthsSlides.push(
+  //         this.getMonthWeeksForTheDate(addMonths(firstDayOfLastWeekOfMonth, 1))
+  //       );
+  //       this.swiper.slideTo(this.monthsSlides.length - 2, 0, false);
+  //     }
+
+  //     this.cdr.detectChanges();
+  //     this.swiper.update();
+
+  //     const lastDayOfFirstWeekOfCurrentMonth =
+  //       this.monthsSlides[this.swiper.activeIndex][0][
+  //         this.monthsSlides[this.swiper.activeIndex][0].length - 1
+  //       ];
+
+  //     this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
+  //   });
+  // }
+
   private generateWeekSlidesFromWeekStarts(weekStarts: Date[]): Date[][] {
     return weekStarts.map((weekStart) => {
       return [1, 2, 3, 4, 5, 6].reduce(

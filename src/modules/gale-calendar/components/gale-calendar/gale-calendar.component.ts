@@ -9,6 +9,7 @@ import { addWeeks } from 'date-fns';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { generateWeekDays } from '../../utils';
+import { MonthsSliderComponent } from '../months-slider/months-slider.component';
 import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
 
 @Component({
@@ -22,6 +23,7 @@ export class GaleCalendarComponent implements OnInit {
   @Input() options?: Partial<GaleCalendarOptions> = {};
 
   @ViewChild(WeeksSliderComponent) weeksSlider!: WeeksSliderComponent;
+  @ViewChild(MonthsSliderComponent) monthsSlider!: MonthsSliderComponent;
 
   calendarOptions: GaleCalendarOptions = {
     weekStart: 1,
@@ -56,46 +58,7 @@ export class GaleCalendarComponent implements OnInit {
     this.weeksSlider.viewDate = viewDate;
   }
 
-  // TODO: unsubscribe from events
-  // private initSwiperEvents(): void {
-  //   this.swiper.on('slideChangeTransitionEnd', () => {
-  //     if (this.swiper.isBeginning) {
-  //       this.leftDiff -= 1;
-  //       this.daysSlides.unshift(
-  //         this.getWeeksForTheDate(addMonths(this.startDate, this.leftDiff))
-  //       );
-  //       this.swiper.slideTo(1, 0, false);
-  //     } else if (this.swiper.isEnd) {
-  //       this.rightDiff += 1;
-  //       this.daysSlides.push(
-  //         this.getWeeksForTheDate(addMonths(this.startDate, this.rightDiff))
-  //       );
-  //       this.swiper.slideTo(this.daysSlides.length - 2, 0, false);
-  //     }
-
-  //     this.cdr.detectChanges();
-  //     this.swiper.update();
-  //   });
-  // }
-
-  // private getWeeksForTheDate(date: Date): Date[][] {
-  //   const start = startOfMonth(date);
-  //   const end = endOfMonth(date);
-
-  //   const weeksStartDates = eachWeekOfInterval(
-  //     { start, end },
-  //     { weekStartsOn: this.calendarOptions.weekStart }
-  //   );
-
-  //   return weeksStartDates.map((weekStart: Date) => {
-  //     return this.weekDays.reduce((acc: Date[]) => {
-  //       let date = weekStart;
-  //       if (acc.length) {
-  //         date = addDays(acc[acc.length - 1], 1);
-  //       }
-  //       acc.push(date);
-  //       return acc;
-  //     }, []);
-  //   });
-  // }
+  slideNext(): void {
+    this.monthsSlider.slideNext();
+  }
 }

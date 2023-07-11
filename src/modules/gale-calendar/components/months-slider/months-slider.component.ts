@@ -83,6 +83,14 @@ export class MonthsSliderComponent implements OnInit {
 
   ngOnInit() {}
 
+  slideNext(): void {
+    this.swiper.slideNext();
+  }
+
+  slidePrev(): void {
+    this.swiper.slidePrev();
+  }
+
   private initSwiperListeners(): void {
     this.swiper.on('slideChangeTransitionEnd', () => {
       let lastDayOfFirstWeekOfMonth = this.monthsSlides[0][0][6];
