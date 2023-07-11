@@ -40,7 +40,10 @@ export class MonthsSliderComponent implements OnInit {
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
   swiper!: Swiper;
 
+  viewDate!: Date;
+
   setViewDate(date: Date, direction?: Swiper['swipeDirection']) {
+    this.viewDate = date;
     const monthStartForViewDate = eachMonthOfInterval({
       start: startOfMonth(addMonths(date, -1)),
       end: endOfMonth(addMonths(date, 1)),
