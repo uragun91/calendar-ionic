@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
   ElementRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
@@ -15,6 +16,7 @@ import { SwiperContainer } from 'swiper/element';
   selector: 'gale-weeks-slider',
   templateUrl: './weeks-slider.component.html',
   styleUrls: ['./weeks-slider.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectedDate!: Date;
