@@ -80,28 +80,48 @@ export class MonthsSliderComponent implements OnInit {
   ngOnInit() {}
 
   private initSwiperListeners(): void {
-    this.swiper.on('reachBeginning', (swiper: Swiper) => {
-      this.addMonthBefore();
-      console.log(swiper);
+    this.swiper.on('slideChangeTransitionEnd', () => {
+      let lastDayOfFirstWeekOfMonth = this.monthsSlides[0][0][6];
+      let firstDayOfLastWeekOfMonth =
+        this.monthsSlides[this.monthsSlides.length - 1][
+          this.monthsSlides[this.monthsSlides.length - 1].length - 1
+        ][0];
+
+      if (this.swiper.isBeginning) {
+        this.monthsSlides.unshift(
+          this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
+        );
+        this.swiper.slideTo(1, 0, false);
+      } else if (this.swiper.isEnd) {
+        this.monthsSlides.push(
+          this.getMonthWeeksForTheDate(addMonths(firstDayOfLastWeekOfMonth, 1))
+        );
+        this.swiper.slideTo(this.monthsSlides.length - 2, 0, false);
+      }
+
+      this.cdr.detectChanges();
+      this.swiper.update();
     });
 
-    this.swiper.on('reachEnd', (swiper: Swiper) => {
-      console.log('ending reached');
-    });
+    // this.swiper.on('reachBeginning', (swiper: Swiper) => {
+    //   this.addMonthBefore();
+    //   console.log(swiper);
+    // });
+
+    // this.swiper.on('reachEnd', (swiper: Swiper) => {
+    //   console.log('ending reached');
+    // });
   }
 
   private addMonthBefore(): void {
     let lastDayOfFirstWeekOfMonth = this.monthsSlides[0][0][6];
 
-    setTimeout(() => {
-      this.monthsSlides.unshift(
-        this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
-      );
-      console.log(this.monthsSlides);
-      this.cdr.detectChanges();
-
-      this.swiper.update();
-    });
+    this.monthsSlides.unshift(
+      this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
+    );
+    // this.swiper.slideTo(1, 0, false);
+    this.cdr.detectChanges();
+    this.swiper.update();
   }
 
   private generateMonthSlidesFromMonthStarts(monthStart: Date[]): Date[][][] {
