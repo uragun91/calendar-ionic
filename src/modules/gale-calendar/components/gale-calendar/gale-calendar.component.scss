@@ -11,3 +11,13 @@
 .calendar-head {
   display: flex;
 }
+
+.sliders {
+  position: relative;
+  overflow: hidden;
+}
+
+gale-weeks-slider {
+  position: absolute;
+  top: 0;
+}
