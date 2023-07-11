@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { getDate } from 'date-fns';
 
 @Component({
-  selector: 'app-days',
+  selector: 'gale-days',
   templateUrl: './days.component.html',
   styleUrls: ['./days.component.scss'],
 })
