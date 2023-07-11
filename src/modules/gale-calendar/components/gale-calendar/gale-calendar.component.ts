@@ -29,20 +29,8 @@ export class GaleCalendarComponent implements OnInit {
     weekStart: 1,
   };
 
-  config: SwiperOptions = {
-    init: false,
-    direction: 'horizontal',
-    initialSlide: 1,
-  };
-
   weekDays: string[] = [];
   view: 'week' | 'month' = 'month';
-
-  constructor() {}
-
-  changeDate(): void {
-    this.startDate = addWeeks(this.startDate, -2);
-  }
 
   ngOnInit() {
     this.calendarOptions = { ...this.calendarOptions, ...this.options };
@@ -54,7 +42,6 @@ export class GaleCalendarComponent implements OnInit {
   }
 
   onMonthViewDateChange(viewDate: Date): void {
-    console.log(viewDate);
     this.weeksSlider.viewDate = viewDate;
   }
 

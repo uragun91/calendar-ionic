@@ -9,14 +9,17 @@ import {
   ElementRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   addDays,
   addWeeks,
+  eachDayOfInterval,
   eachWeekOfInterval,
+  endOfWeek,
   isSameDay,
-  max,
-  min,
+  startOfWeek,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
@@ -33,6 +36,8 @@ import { mergeDates } from '../../utils';
 export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectedDate!: Date;
   @Input() calendarOptions!: GaleCalendarOptions;
+
+  @Output() viewDateChange = new EventEmitter<void>();
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
 
@@ -64,7 +69,7 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
 
     if (this.swiper) {
       this.swiper.update();
-      this.swiper.slideTo(this.getWeekIndex(date), 0, false);
+      this.swiper.slideTo(this.getWeekIndexByDate(date), 0, false);
     }
   }
 
@@ -86,41 +91,63 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
     Object.assign(this.swiperContainerRef.nativeElement, sliderOptions);
     this.swiperContainerRef.nativeElement.initialize();
     this.swiper = this.swiperContainerRef.nativeElement.swiper;
+
+    this.initSwiperListeners();
   }
 
   ngOnInit() {}
 
-  // private initSwiperListeners(): void {
-  //   this.swiper.on('slideChangeTransitionEnd', () => {
-  //     let lastDayOfFirstWeekOfMonth = this.weeksSlides[0][0][6];
-  //     let firstDayOfLastWeekOfMonth =
-  //       this.monthsSlides[this.monthsSlides.length - 1][
-  //         this.monthsSlides[this.monthsSlides.length - 1].length - 1
-  //       ][0];
+  private initSwiperListeners(): void {
+    this.swiper.on('slideChangeTransitionEnd', () => {
+      if (this.swiper.isBeginning) {
+        this.weeksSlides.unshift(
+          eachDayOfInterval({
+            start: addWeeks(
+              startOfWeek(this.weeksSlides[0][0], {
+                weekStartsOn: this.calendarOptions.weekStart,
+              }),
+              -1
+            ),
+            end: addWeeks(
+              endOfWeek(this.weeksSlides[0][0], {
+                weekStartsOn: this.calendarOptions.weekStart,
+              }),
+              -1
+            ),
+          })
+        );
+        this.swiper.slideTo(1, 0, false);
+      } else if (this.swiper.isEnd) {
+        this.weeksSlides.push(
+          eachDayOfInterval({
+            start: addWeeks(
+              startOfWeek(this.weeksSlides[this.weeksSlides.length - 1][0], {
+                weekStartsOn: this.calendarOptions.weekStart,
+              }),
+              1
+            ),
+            end: addWeeks(
+              endOfWeek(this.weeksSlides[this.weeksSlides.length - 1][0], {
+                weekStartsOn: this.calendarOptions.weekStart,
+              }),
+              1
+            ),
+          })
+        );
+        this.swiper.slideTo(this.weeksSlides.length - 2, 0, false);
+      }
 
-  //     if (this.swiper.isBeginning) {
-  //       this.monthsSlides.unshift(
-  //         this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
-  //       );
-  //       this.swiper.slideTo(1, 0, false);
-  //     } else if (this.swiper.isEnd) {
-  //       this.monthsSlides.push(
-  //         this.getMonthWeeksForTheDate(addMonths(firstDayOfLastWeekOfMonth, 1))
-  //       );
-  //       this.swiper.slideTo(this.monthsSlides.length - 2, 0, false);
-  //     }
+      this.cdr.detectChanges();
+      this.swiper.update();
 
-  //     this.cdr.detectChanges();
-  //     this.swiper.update();
+      // const lastDayOfFirstWeekOfCurrentMonth =
+      //   this.monthsSlides[this.swiper.activeIndex][0][
+      //     this.monthsSlides[this.swiper.activeIndex][0].length - 1
+      //   ];
 
-  //     const lastDayOfFirstWeekOfCurrentMonth =
-  //       this.monthsSlides[this.swiper.activeIndex][0][
-  //         this.monthsSlides[this.swiper.activeIndex][0].length - 1
-  //       ];
-
-  //     this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
-  //   });
-  // }
+      // this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
+    });
+  }
 
   private generateWeekSlidesFromWeekStarts(weekStarts: Date[]): Date[][] {
     return weekStarts.map((weekStart) => {
@@ -134,7 +161,7 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
-  private getWeekIndex(date: Date): number {
+  private getWeekIndexByDate(date: Date): number {
     for (let i = 0; i < this.weeksSlides.length; i++) {
       const isInTheWeek = this.weeksSlides[i].some((day) =>
         isSameDay(date, day)
