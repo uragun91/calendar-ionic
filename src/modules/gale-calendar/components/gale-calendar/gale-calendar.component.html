@@ -1,8 +1,18 @@
-<h2>Weeks slides</h2>
-<div class="week-day" *ngFor="let weekDay of weekDays">
-  {{ weekDay }}
+<div class="container">
+  <h2>Months slides</h2>
+  <div class="week-day" *ngFor="let weekDay of weekDays">
+    {{ weekDay }}
+  </div>
+  <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
 </div>
-<gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
+
+<div class="container">
+  <h2>Weeks slides</h2>
+  <div class="week-day" *ngFor="let weekDay of weekDays">
+    {{ weekDay }}
+  </div>
+  <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
+</div>
 
 
 <button (click)="changeDate()">Change date</button>

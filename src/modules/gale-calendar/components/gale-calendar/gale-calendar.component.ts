@@ -3,7 +3,6 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { addWeeks } from 'date-fns';
 import { SwiperOptions } from 'swiper/types/swiper-options';
@@ -19,7 +18,6 @@ import { generateWeekDays } from '../../utils';
 export class GaleCalendarComponent implements OnInit {
   @Input() startDate: Date = new Date();
   @Input() options?: Partial<GaleCalendarOptions> = {};
-  // @ViewChildren(DatesComponent) galeDatesComponents!: QueryList<DatesComponent>;
 
   calendarOptions: GaleCalendarOptions = {
     weekStart: 1,
