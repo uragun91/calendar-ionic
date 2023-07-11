@@ -5,6 +5,7 @@ import { DatesComponent } from './components/dates/dates.component';
 import { SwiperDirective } from './swiper.directive';
 import { WeeksSliderComponent } from './components/weeks-slider/weeks-slider.component';
 import { DaysComponent } from './components/days/days.component';
+import { MonthsSliderComponent } from './components/months-slider/months-slider.component';
 
 @NgModule({
   imports: [CommonModule],
@@ -14,6 +15,7 @@ import { DaysComponent } from './components/days/days.component';
     DatesComponent,
     SwiperDirective,
     WeeksSliderComponent,
+    MonthsSliderComponent,
     DaysComponent,
   ],
   exports: [GaleCalendarComponent],

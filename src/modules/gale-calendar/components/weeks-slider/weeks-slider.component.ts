@@ -51,8 +51,6 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   public weeksSlides: Date[][] = [];
   private weekStarts: Date[] = [];
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDate.currentValue) {
       this.viewDate = this.selectedDate;
