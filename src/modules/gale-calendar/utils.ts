@@ -16,3 +16,12 @@ export function mergeDates(
     }
   );
 }
+
+export function generateWeekDays(weekStart: number = 0): string[] {
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const adjustedWeekdays = [
+    ...weekdays.slice(weekStart),
+    ...weekdays.slice(0, weekStart),
+  ];
+  return adjustedWeekdays;
+}

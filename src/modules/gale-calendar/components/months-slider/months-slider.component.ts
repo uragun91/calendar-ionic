@@ -13,8 +13,6 @@ import {
   eachMonthOfInterval,
   eachWeekOfInterval,
   endOfMonth,
-  max,
-  min,
   startOfMonth,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
