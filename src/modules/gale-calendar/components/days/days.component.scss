@@ -1,0 +1,9 @@
+@import '../../mixins';
+
+:host {
+  display: block;
+}
+
+.day {
+  @include calendar-day();
+}
