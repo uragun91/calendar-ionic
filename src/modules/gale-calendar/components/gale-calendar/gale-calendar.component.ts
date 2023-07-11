@@ -5,8 +5,6 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
 } from '@angular/core';
-import { addWeeks } from 'date-fns';
-import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { generateWeekDays } from '../../utils';
 import { MonthsSliderComponent } from '../months-slider/months-slider.component';
@@ -43,6 +41,10 @@ export class GaleCalendarComponent implements OnInit {
 
   onMonthViewDateChange(viewDate: Date): void {
     this.weeksSlider.viewDate = viewDate;
+  }
+
+  onWeekViewDateChange(viewDate: Date): void {
+    console.log(viewDate);
   }
 
   slideNext(): void {

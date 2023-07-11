@@ -19,5 +19,5 @@
   <div class="week-day" *ngFor="let weekDay of weekDays">
     {{ weekDay }}
   </div>
-  <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
+  <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
 </div>

@@ -37,7 +37,7 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() selectedDate!: Date;
   @Input() calendarOptions!: GaleCalendarOptions;
 
-  @Output() viewDateChange = new EventEmitter<void>();
+  @Output() viewDateChange = new EventEmitter<Date>();
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
 
@@ -140,12 +140,13 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
       this.cdr.detectChanges();
       this.swiper.update();
 
-      // const lastDayOfFirstWeekOfCurrentMonth =
-      //   this.monthsSlides[this.swiper.activeIndex][0][
-      //     this.monthsSlides[this.swiper.activeIndex][0].length - 1
-      //   ];
+      const currentWeek = this.weeksSlides[this.swiper.activeIndex];
 
-      // this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
+      if (this.swiper.swipeDirection === 'next') {
+        this.viewDateChange.emit(currentWeek[0]);
+      } else {
+        this.viewDateChange.emit(currentWeek[currentWeek.length - 1]);
+      }
     });
   }
 
