@@ -1,0 +1,16 @@
+<swiper-container
+  #swiper
+  class="container"
+  init="false"
+>
+  <swiper-slide class="single-item" *ngFor="let weeks of monthsSlides">
+    <div class="week" *ngFor="let days of weeks">
+      <gale-days [days]="days" />
+    </div>
+    
+  </swiper-slide>
+</swiper-container>
+
+<pre>
+  monthsSlides: {{ monthsSlides | json }}
+</pre>

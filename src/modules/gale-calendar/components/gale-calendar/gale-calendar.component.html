@@ -2,7 +2,7 @@
 <div class="week-day" *ngFor="let weekDay of weekDays">
   {{ weekDay }}
 </div>
-<gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
+<gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
 
 
 <button (click)="changeDate()">Change date</button>
