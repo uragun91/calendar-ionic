@@ -30,8 +30,6 @@ export class GaleCalendarComponent implements OnInit {
   };
 
   weekDays: string[] = [];
-
-  // TODO: add this as input
   view: 'week' | 'month' = 'month';
 
   constructor() {}

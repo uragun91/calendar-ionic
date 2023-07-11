@@ -6,6 +6,7 @@ import {
   ViewChild,
   SimpleChanges,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   addDays,
@@ -16,6 +17,7 @@ import {
   startOfMonth,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
+import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { mergeDates } from '../../utils';
@@ -31,6 +33,7 @@ export class MonthsSliderComponent implements OnInit {
   @Input() calendarOptions!: GaleCalendarOptions;
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
+  swiper!: Swiper;
 
   set viewDate(date: Date) {
     const monthStartForViewDate = eachMonthOfInterval({
@@ -56,6 +59,8 @@ export class MonthsSliderComponent implements OnInit {
   public monthsSlides: Date[][][] = [];
   private monthStarts: Date[] = [];
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDate.currentValue) {
       this.viewDate = this.selectedDate;
@@ -68,9 +73,36 @@ export class MonthsSliderComponent implements OnInit {
     };
     Object.assign(this.swiperContainerRef.nativeElement, sliderOptions);
     this.swiperContainerRef.nativeElement.initialize();
+    this.swiper = this.swiperContainerRef.nativeElement.swiper;
+    this.initSwiperListeners();
   }
 
   ngOnInit() {}
+
+  private initSwiperListeners(): void {
+    this.swiper.on('reachBeginning', (swiper: Swiper) => {
+      this.addMonthBefore();
+      console.log(swiper);
+    });
+
+    this.swiper.on('reachEnd', (swiper: Swiper) => {
+      console.log('ending reached');
+    });
+  }
+
+  private addMonthBefore(): void {
+    let lastDayOfFirstWeekOfMonth = this.monthsSlides[0][0][6];
+
+    setTimeout(() => {
+      this.monthsSlides.unshift(
+        this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
+      );
+      console.log(this.monthsSlides);
+      this.cdr.detectChanges();
+
+      this.swiper.update();
+    });
+  }
 
   private generateMonthSlidesFromMonthStarts(monthStart: Date[]): Date[][][] {
     return monthStart.map((monthStart) => {
