@@ -7,6 +7,8 @@ import {
   SimpleChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   addDays,
@@ -31,6 +33,8 @@ import { mergeDates } from '../../utils';
 export class MonthsSliderComponent implements OnInit {
   @Input() selectedDate!: Date;
   @Input() calendarOptions!: GaleCalendarOptions;
+
+  @Output() viewDateChange = new EventEmitter<Date>();
 
   @ViewChild('swiper') swiperContainerRef!: ElementRef<SwiperContainer>;
   swiper!: Swiper;
@@ -101,6 +105,16 @@ export class MonthsSliderComponent implements OnInit {
 
       this.cdr.detectChanges();
       this.swiper.update();
+
+      const lastDayOfFirstWeekOfCurrentMonth =
+        this.monthsSlides[this.swiper.activeIndex][0][
+          this.monthsSlides[this.swiper.activeIndex][0].length - 1
+        ];
+
+      this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
+
+      console.log(this.swiper.activeIndex);
+      console.log(this.monthsSlides[this.swiper.activeIndex]);
     });
   }
 
