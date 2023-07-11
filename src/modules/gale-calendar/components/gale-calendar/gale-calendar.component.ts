@@ -3,11 +3,13 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
+  ViewChild,
 } from '@angular/core';
 import { addWeeks } from 'date-fns';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { generateWeekDays } from '../../utils';
+import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
 
 @Component({
   selector: 'gale-calendar',
@@ -18,6 +20,8 @@ import { generateWeekDays } from '../../utils';
 export class GaleCalendarComponent implements OnInit {
   @Input() startDate: Date = new Date();
   @Input() options?: Partial<GaleCalendarOptions> = {};
+
+  @ViewChild(WeeksSliderComponent) weeksSlider!: WeeksSliderComponent;
 
   calendarOptions: GaleCalendarOptions = {
     weekStart: 1,
@@ -45,6 +49,10 @@ export class GaleCalendarComponent implements OnInit {
 
   changeView(): void {
     this.view = this.view === 'month' ? 'week' : 'month';
+  }
+
+  onMonthViewDateChange(viewDate: Date): void {
+    this.weeksSlider.viewDate = viewDate;
   }
 
   // TODO: unsubscribe from events

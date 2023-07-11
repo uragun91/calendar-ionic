@@ -3,7 +3,7 @@
   <div class="week-day" *ngFor="let weekDay of weekDays">
     {{ weekDay }}
   </div>
-  <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" />
+  <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
 </div>
 
 <div class="container">

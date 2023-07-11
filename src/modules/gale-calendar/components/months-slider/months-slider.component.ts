@@ -112,9 +112,6 @@ export class MonthsSliderComponent implements OnInit {
         ];
 
       this.viewDateChange.emit(startOfMonth(lastDayOfFirstWeekOfCurrentMonth));
-
-      console.log(this.swiper.activeIndex);
-      console.log(this.monthsSlides[this.swiper.activeIndex]);
     });
   }
 
