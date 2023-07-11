@@ -16,6 +16,7 @@ import {
   startOfMonth,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
+import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { mergeDates } from '../../utils';
 
@@ -62,6 +63,10 @@ export class MonthsSliderComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    const sliderOptions: SwiperOptions = {
+      initialSlide: 1,
+    };
+    Object.assign(this.swiperContainerRef.nativeElement, sliderOptions);
     this.swiperContainerRef.nativeElement.initialize();
   }
 

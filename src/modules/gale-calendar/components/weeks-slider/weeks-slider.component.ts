@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { addDays, addWeeks, eachWeekOfInterval, max, min } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
+import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { mergeDates } from '../../utils';
 
@@ -60,6 +61,10 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    const sliderOptions: SwiperOptions = {
+      initialSlide: 1,
+    };
+    Object.assign(this.swiperContainerRef.nativeElement, sliderOptions);
     this.swiperContainerRef.nativeElement.initialize();
   }
 
