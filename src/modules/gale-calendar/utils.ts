@@ -1,4 +1,10 @@
-import { eachMonthOfInterval, eachWeekOfInterval, max, min } from 'date-fns';
+import {
+  eachMonthOfInterval,
+  eachWeekOfInterval,
+  format,
+  max,
+  min,
+} from 'date-fns';
 import { GaleCalendarOptions } from './models/calendar-options.model';
 
 export function mergeWeekStartDates(
@@ -31,4 +37,8 @@ export function generateWeekDays(weekStart: number = 0): string[] {
     ...weekdays.slice(0, weekStart),
   ];
   return adjustedWeekdays;
+}
+
+export function getMonthNameOFDate(date: Date): string {
+  return format(date, 'LLLL');
 }

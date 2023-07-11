@@ -1,10 +1,10 @@
 <div class="container">
   <h2>Months slides</h2>
 
-  <div class="controls">
+  <div class="calendar-head">
     <button (click)="slidePrev()">Prev</button>
+    <span class="month">{{ currentMonth }}</span>
     <button (click)="slideNext()">Next</button>
-    <button (click)="switchView()">Switch view</button>
   </div>
   
   <div class="week-days">
@@ -14,4 +14,5 @@
   </div>
   <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
   <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
+  <button (click)="switchView()">Switch view</button>
 </div>

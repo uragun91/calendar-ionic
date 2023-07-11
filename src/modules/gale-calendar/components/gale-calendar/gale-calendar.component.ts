@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import Swiper from 'swiper/types/swiper-class';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
-import { generateWeekDays } from '../../utils';
+import { generateWeekDays, getMonthNameOFDate } from '../../utils';
 import { MonthsSliderComponent } from '../months-slider/months-slider.component';
 import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
 
@@ -30,10 +30,13 @@ export class GaleCalendarComponent implements OnInit {
 
   weekDays: string[] = [];
   view: 'week' | 'month' = 'month';
+  currentMonth = '';
 
   ngOnInit() {
     this.calendarOptions = { ...this.calendarOptions, ...this.options };
     this.weekDays = generateWeekDays(this.calendarOptions.weekStart);
+
+    this.currentMonth = getMonthNameOFDate(this.startDate);
   }
 
   switchView(): void {
@@ -42,6 +45,7 @@ export class GaleCalendarComponent implements OnInit {
 
   onMonthViewDateChange(viewDate: Date): void {
     this.weeksSlider.viewDate = viewDate;
+    this.currentMonth = getMonthNameOFDate(viewDate);
   }
 
   onWeekViewDateChange({
@@ -52,14 +56,22 @@ export class GaleCalendarComponent implements OnInit {
     direction: Swiper['swipeDirection'];
   }): void {
     this.monthsSlider.setViewDate(viewDate, direction);
-    console.log(viewDate);
+    this.currentMonth = getMonthNameOFDate(viewDate);
   }
 
   slideNext(): void {
-    this.monthsSlider.slideNext();
+    if (this.view === 'month') {
+      this.monthsSlider.slideNext();
+    } else {
+      this.weeksSlider.slideNext();
+    }
   }
 
   slidePrev(): void {
-    this.monthsSlider.slidePrev();
+    if (this.view === 'month') {
+      this.monthsSlider.slidePrev();
+    } else {
+      this.weeksSlider.slidePrev();
+    }
   }
 }

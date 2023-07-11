@@ -100,6 +100,14 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit() {}
 
+  slideNext(): void {
+    this.swiper.slideNext();
+  }
+
+  slidePrev(): void {
+    this.swiper.slidePrev();
+  }
+
   private initSwiperListeners(): void {
     this.swiper.on('slideChangeTransitionEnd', () => {
       if (this.swiper.isBeginning) {
