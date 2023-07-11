@@ -16,6 +16,7 @@ import {
   eachMonthOfInterval,
   eachWeekOfInterval,
   endOfMonth,
+  isSameDay,
   startOfMonth,
 } from 'date-fns';
 import { SwiperContainer } from 'swiper/element';
@@ -59,6 +60,10 @@ export class MonthsSliderComponent implements OnInit {
       this.monthStarts
     );
     this.cdr.detectChanges();
+
+    if (this.swiper) {
+      this.swiper.update();
+    }
   }
 
   public monthsSlides: Date[][][] = [];
@@ -148,5 +153,21 @@ export class MonthsSliderComponent implements OnInit {
         [weekStart]
       );
     });
+  }
+
+  private getMonthIndexByDate(date: Date): number {
+    for (let i = 0; i < this.monthsSlides.length; i++) {
+      for (let j = 0; j < this.monthsSlides[i].length; j++) {
+        const isInTheWeek = this.monthsSlides[i][j].some((day) =>
+          isSameDay(date, day)
+        );
+
+        if (isInTheWeek) {
+          return i;
+        }
+      }
+    }
+
+    return -1;
   }
 }
