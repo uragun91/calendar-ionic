@@ -25,7 +25,7 @@ import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
-import { mergeDates } from '../../utils';
+import { mergeWeekStartDates } from '../../utils';
 
 @Component({
   selector: 'gale-weeks-slider',
@@ -60,7 +60,7 @@ export class WeeksSliderComponent implements OnInit, OnChanges, AfterViewInit {
     if (!this.weekStarts.length) {
       this.weekStarts = weeksStartForViewDates;
     } else {
-      this.weekStarts = mergeDates(
+      this.weekStarts = mergeWeekStartDates(
         weeksStartForViewDates,
         this.weekStarts,
         this.calendarOptions.weekStart

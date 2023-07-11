@@ -23,7 +23,7 @@ import { SwiperContainer } from 'swiper/element';
 import Swiper from 'swiper/types/swiper-class';
 import { SwiperOptions } from 'swiper/types/swiper-options';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
-import { mergeDates } from '../../utils';
+import { mergeMonthsStartDates } from '../../utils';
 
 @Component({
   selector: 'gale-months-slider',
@@ -52,10 +52,9 @@ export class MonthsSliderComponent implements OnInit {
     if (!this.monthStarts.length) {
       this.monthStarts = monthStartForViewDate;
     } else {
-      this.monthStarts = mergeDates(
+      this.monthStarts = mergeMonthsStartDates(
         monthStartForViewDate,
-        this.monthStarts,
-        this.calendarOptions.weekStart
+        this.monthStarts
       );
     }
 
