@@ -36,7 +36,7 @@ export class GaleCalendarComponent implements OnInit {
     this.weekDays = generateWeekDays(this.calendarOptions.weekStart);
   }
 
-  changeView(): void {
+  switchView(): void {
     this.view = this.view === 'month' ? 'week' : 'month';
   }
 
