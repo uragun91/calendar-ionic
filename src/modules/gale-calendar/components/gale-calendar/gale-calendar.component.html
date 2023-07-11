@@ -1,7 +1,15 @@
 <div class="container">
   <h2>Months slides</h2>
-  <div class="week-day" *ngFor="let weekDay of weekDays">
-    {{ weekDay }}
+
+  <div class="controls">
+    <button (click)="slidePrev()">Prev</button>
+    <button (click)="slideNext()">Next</button>
+  </div>
+  
+  <div class="week-days">
+    <div class="week-day" *ngFor="let weekDay of weekDays">
+      {{ weekDay }}
+    </div>
   </div>
   <gale-months-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
 </div>

@@ -61,4 +61,8 @@ export class GaleCalendarComponent implements OnInit {
   slideNext(): void {
     this.monthsSlider.slideNext();
   }
+
+  slidePrev(): void {
+    this.monthsSlider.slidePrev();
+  }
 }
