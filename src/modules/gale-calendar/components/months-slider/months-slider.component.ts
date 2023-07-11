@@ -102,26 +102,6 @@ export class MonthsSliderComponent implements OnInit {
       this.cdr.detectChanges();
       this.swiper.update();
     });
-
-    // this.swiper.on('reachBeginning', (swiper: Swiper) => {
-    //   this.addMonthBefore();
-    //   console.log(swiper);
-    // });
-
-    // this.swiper.on('reachEnd', (swiper: Swiper) => {
-    //   console.log('ending reached');
-    // });
-  }
-
-  private addMonthBefore(): void {
-    let lastDayOfFirstWeekOfMonth = this.monthsSlides[0][0][6];
-
-    this.monthsSlides.unshift(
-      this.getMonthWeeksForTheDate(addMonths(lastDayOfFirstWeekOfMonth, -1))
-    );
-    // this.swiper.slideTo(1, 0, false);
-    this.cdr.detectChanges();
-    this.swiper.update();
   }
 
   private generateMonthSlidesFromMonthStarts(monthStart: Date[]): Date[][][] {
