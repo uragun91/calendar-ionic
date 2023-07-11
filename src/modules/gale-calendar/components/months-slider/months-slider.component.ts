@@ -58,6 +58,7 @@ export class MonthsSliderComponent implements OnInit {
     this.monthsSlides = this.generateMonthSlidesFromMonthStarts(
       this.monthStarts
     );
+    this.cdr.detectChanges();
   }
 
   public monthsSlides: Date[][][] = [];

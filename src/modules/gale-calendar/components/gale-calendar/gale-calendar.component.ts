@@ -44,6 +44,7 @@ export class GaleCalendarComponent implements OnInit {
   }
 
   onWeekViewDateChange(viewDate: Date): void {
+    this.monthsSlider.viewDate = viewDate;
     console.log(viewDate);
   }
 
