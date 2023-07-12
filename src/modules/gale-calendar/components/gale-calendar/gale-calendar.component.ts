@@ -15,7 +15,7 @@ import { generateWeekDays, getMonthNameOFDate } from '../../utils';
 import { MonthsSliderComponent } from '../months-slider/months-slider.component';
 import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
 
-const ANIMATION_DURATION = 2000;
+const ANIMATION_DURATION = 500;
 
 @Component({
   selector: 'gale-calendar',
@@ -106,6 +106,7 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   private initAnimation(): void {
     const { nativeElement: monthsSliderElement } = this.monthsSliderElementRef;
 
+    // TODO: add cubic bezier
     this.monthSliderAnimation = this.animationController
       .create()
       .addElement(monthsSliderElement)
