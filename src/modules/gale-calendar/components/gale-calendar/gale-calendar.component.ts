@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ElementRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Animation, AnimationController } from '@ionic/angular';
 import Swiper from 'swiper/types/swiper-class';
@@ -43,7 +44,10 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
 
   showMonthSlider = true;
 
-  constructor(private animationController: AnimationController) {}
+  constructor(
+    private animationController: AnimationController,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.calendarOptions = { ...this.calendarOptions, ...this.options };
@@ -109,6 +113,7 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
       .fromTo('marginTop', '0px', '-150px')
       .onFinish(() => {
         this.showMonthSlider = false;
+        this.cdr.detectChanges();
       });
   }
 }
