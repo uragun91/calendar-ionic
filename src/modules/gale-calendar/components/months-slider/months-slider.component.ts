@@ -42,8 +42,6 @@ export class MonthsSliderComponent implements OnInit {
 
   viewDate!: Date;
 
-  getWeekHeight(): number {}
-
   setViewDate(date: Date, direction?: Swiper['swipeDirection']) {
     this.viewDate = date;
     const monthStartForViewDate = eachMonthOfInterval({

@@ -2,14 +2,19 @@ import {
   Component,
   Input,
   OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ViewChild,
+  ElementRef,
 } from '@angular/core';
+import { Animation, AnimationController } from '@ionic/angular';
 import Swiper from 'swiper/types/swiper-class';
 import { GaleCalendarOptions } from '../../models/calendar-options.model';
 import { generateWeekDays, getMonthNameOFDate } from '../../utils';
 import { MonthsSliderComponent } from '../months-slider/months-slider.component';
 import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
+
+const ANIMATION_DURATION = 2000;
 
 @Component({
   selector: 'gale-calendar',
@@ -17,12 +22,16 @@ import { WeeksSliderComponent } from '../weeks-slider/weeks-slider.component';
   styleUrls: ['./gale-calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GaleCalendarComponent implements OnInit {
+export class GaleCalendarComponent implements OnInit, AfterViewInit {
   @Input() startDate: Date = new Date();
   @Input() options?: Partial<GaleCalendarOptions> = {};
 
   @ViewChild(WeeksSliderComponent) weeksSlider!: WeeksSliderComponent;
   @ViewChild(MonthsSliderComponent) monthsSlider!: MonthsSliderComponent;
+  @ViewChild(MonthsSliderComponent, { read: ElementRef })
+  monthsSliderElementRef!: ElementRef;
+
+  monthSliderAnimation!: Animation;
 
   calendarOptions: GaleCalendarOptions = {
     weekStart: 1,
@@ -32,6 +41,8 @@ export class GaleCalendarComponent implements OnInit {
   view: 'week' | 'month' = 'month';
   currentMonth = '';
 
+  constructor(private animationController: AnimationController) {}
+
   ngOnInit() {
     this.calendarOptions = { ...this.calendarOptions, ...this.options };
     this.weekDays = generateWeekDays(this.calendarOptions.weekStart);
@@ -39,8 +50,13 @@ export class GaleCalendarComponent implements OnInit {
     this.currentMonth = getMonthNameOFDate(this.startDate);
   }
 
+  ngAfterViewInit(): void {
+    this.initAnimation();
+  }
+
   switchView(): void {
     this.view = this.view === 'month' ? 'week' : 'month';
+    this.playAnimation();
   }
 
   onMonthViewDateChange(viewDate: Date): void {
@@ -73,5 +89,20 @@ export class GaleCalendarComponent implements OnInit {
     } else {
       this.weeksSlider.slidePrev();
     }
+  }
+
+  private playAnimation(): void {
+    this.monthSliderAnimation.play();
+  }
+
+  private initAnimation(): void {
+    this.monthSliderAnimation = this.animationController
+      .create()
+      .addElement(this.monthsSliderElementRef.nativeElement)
+      .duration(ANIMATION_DURATION)
+      .from('margin-bottom', '0px')
+      .from('margin-top', '0px')
+      .to('margin-bottom', '-100px')
+      .to('margin-top', '-100px');
   }
 }
