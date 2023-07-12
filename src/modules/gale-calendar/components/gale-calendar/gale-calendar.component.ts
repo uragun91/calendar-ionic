@@ -41,6 +41,8 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   view: 'week' | 'month' = 'month';
   currentMonth = '';
 
+  showMonthSlider = true;
+
   constructor(private animationController: AnimationController) {}
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log(this.monthsSliderElementRef);
     this.initAnimation();
   }
 
@@ -96,13 +99,16 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   }
 
   private initAnimation(): void {
+    const { nativeElement: monthsSliderElement } = this.monthsSliderElementRef;
+
     this.monthSliderAnimation = this.animationController
       .create()
-      .addElement(this.monthsSliderElementRef.nativeElement)
+      .addElement(monthsSliderElement)
       .duration(ANIMATION_DURATION)
-      .from('margin-bottom', '0px')
-      .from('margin-top', '0px')
-      .to('margin-bottom', '-100px')
-      .to('margin-top', '-100px');
+      .fromTo('marginBottom', '0px', '-150px')
+      .fromTo('marginTop', '0px', '-150px')
+      .onFinish(() => {
+        this.showMonthSlider = false;
+      });
   }
 }
