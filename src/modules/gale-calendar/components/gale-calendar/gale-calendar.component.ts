@@ -111,9 +111,10 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
       .addElement(monthsSliderElement)
       .duration(ANIMATION_DURATION)
       .fromTo('marginBottom', '0px', '-150px')
-      .fromTo('marginTop', '0px', '-150px')
+      .fromTo('marginTop', '0px', '-100px')
       .onFinish(() => {
         this.showMonthSlider = false;
+        this.showWeekSlider = true;
         this.cdr.detectChanges();
       });
   }
