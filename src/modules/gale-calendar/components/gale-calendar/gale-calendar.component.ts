@@ -43,6 +43,7 @@ export class GaleCalendarComponent implements OnInit, AfterViewInit {
   currentMonth = '';
 
   showMonthSlider = true;
+  showWeekSlider = false;
 
   constructor(
     private animationController: AnimationController,

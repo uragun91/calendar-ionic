@@ -12,7 +12,7 @@
   </div>
   <div class="sliders">
     <gale-months-slider [hidden]="!showMonthSlider" [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onMonthViewDateChange($event)" />
-    <gale-weeks-slider [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
+    <gale-weeks-slider [hidden]="!showWeekSlider" [selectedDate]="startDate" [calendarOptions]="calendarOptions" (viewDateChange)="onWeekViewDateChange($event)" />
   </div>
   <button (click)="switchView()">Switch view</button>
 </div>
